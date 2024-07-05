@@ -22,13 +22,6 @@ for obj in bpy.context.scene.objects:
     if obj.type == 'MESH':
         obj.select_set(True)
 
-# Scale factor
-scale_factor = 1000.0
-
-# Apply scaling to all selected mesh objects
-for obj in bpy.context.selected_objects:
-    obj.scale *= scale_factor
-    
 # Count selected objects and their faces
 selected_objects = bpy.context.selected_objects
 print(f"Found {len(selected_objects)} mesh objects")

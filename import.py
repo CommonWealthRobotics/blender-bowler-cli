@@ -21,13 +21,6 @@ obj.select_set(True)
 bpy.context.view_layer.objects.active = obj
 bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY', center='BOUNDS')
 
-# Scale factor
-scale_factor = 0.001
-
-# Apply scaling to the imported object
-obj.scale *= scale_factor
-
-
 # Create a camera if it doesn't exist
 if not bpy.context.scene.camera:
     bpy.ops.object.camera_add()
