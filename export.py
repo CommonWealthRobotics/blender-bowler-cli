@@ -2,12 +2,19 @@ import bpy
 import sys
 import os
 
+def ensure_object_mode():
+    if bpy.context.active_object and bpy.context.active_object.mode != 'OBJECT':
+        bpy.ops.object.mode_set(mode='OBJECT')
+
 # Get the input Blender file path and output STL path from command line arguments
 input_blend_path = sys.argv[-2]
 output_stl_path = sys.argv[-1]
 
 # Load the Blender file
 bpy.ops.wm.open_mainfile(filepath=input_blend_path)
+
+# Ensure we're in object mode
+ensure_object_mode()
 
 # Select all mesh objects
 bpy.ops.object.select_all(action='DESELECT')
@@ -28,7 +35,7 @@ bpy.ops.export_mesh.stl(
     use_selection=True,
     global_scale=1.0,
     use_scene_unit=True,
-    ascii=True,  # This line ensures ASCII output
+    ascii=True,
     use_mesh_modifiers=True
 )
 
