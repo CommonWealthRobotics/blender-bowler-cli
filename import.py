@@ -7,18 +7,23 @@ import math
 input_stl_path = sys.argv[-2]
 output_blend_path = sys.argv[-1]
 
-# Clear the default cube (if it exists)
-bpy.ops.object.select_all(action='SELECT')
-bpy.ops.object.delete()
+# Check if the output Blender file already exists
+if os.path.exists(output_blend_path):
+    # Load the existing Blender file
+    bpy.ops.wm.open_mainfile(filepath=output_blend_path)
+else:
+    # Clear the default cube (if it exists)
+    bpy.ops.object.select_all(action='SELECT')
+    bpy.ops.object.delete()
 
 # Import the STL file
 bpy.ops.import_mesh.stl(filepath=input_stl_path)
 
 # Select the imported object and center it
-obj = bpy.context.selected_objects[0]
+imported_obj = bpy.context.selected_objects[0]
 bpy.ops.object.select_all(action='DESELECT')
-obj.select_set(True)
-bpy.context.view_layer.objects.active = obj
+imported_obj.select_set(True)
+bpy.context.view_layer.objects.active = imported_obj
 bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY', center='BOUNDS')
 
 # Create a camera if it doesn't exist
@@ -29,9 +34,9 @@ if not bpy.context.scene.camera:
 else:
     camera = bpy.context.scene.camera
 
-# Position the camera to view the object
-bound_box = obj.bound_box
-center = obj.location
+# Position the camera to view the imported object
+bound_box = imported_obj.bound_box
+center = imported_obj.location
 size = max((max(v[i] for v in bound_box) - min(v[i] for v in bound_box)) for i in range(3))
 camera.location = (center.x, center.y - size * 2, center.z + size)
 camera.rotation_euler = (math.radians(60), 0, 0)
