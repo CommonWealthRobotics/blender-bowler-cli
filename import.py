@@ -15,6 +15,7 @@ else:
     # Clear the default cube (if it exists)
     bpy.ops.object.select_all(action='SELECT')
     bpy.ops.object.delete()
+    print("Deleting existing objects because file does not exist")
 
 # Import the STL file
 bpy.ops.import_mesh.stl(filepath=input_stl_path)
