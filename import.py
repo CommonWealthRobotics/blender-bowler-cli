@@ -50,7 +50,7 @@ try:
 
     # Save the blend file
     bpy.ops.wm.save_as_mainfile(filepath=output_blend_path)
-
+    #
     print(f"STL imported from: {input_stl_path}")
     print(f"Blender file saved to: {output_blend_path}")
 
