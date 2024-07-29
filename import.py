@@ -28,6 +28,8 @@ try:
     imported_obj.select_set(True)
     bpy.context.view_layer.objects.active = imported_obj
     bpy.ops.object.origin_set(type='ORIGIN_GEOMETRY', center='BOUNDS')
+    # Set the remesh voxel size to 1mm
+    imported_obj.data.remesh_voxel_size = 0.001
 
     # Create a camera if it doesn't exist
     if not bpy.context.scene.camera:
@@ -43,10 +45,6 @@ try:
     size = max((max(v[i] for v in bound_box) - min(v[i] for v in bound_box)) for i in range(3))
     camera.location = (center.x, center.y - size * 2, center.z + size)
     camera.rotation_euler = (math.radians(60), 0, 0)
-
-    # Set up the scene for rendering (optional)
-    bpy.context.scene.render.resolution_x = 1920
-    bpy.context.scene.render.resolution_y = 1080
 
     # Save the blend file
     bpy.ops.wm.save_as_mainfile(filepath=output_blend_path)
