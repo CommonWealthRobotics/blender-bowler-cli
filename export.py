@@ -28,6 +28,7 @@ for obj in selected_objects:
     print(f"Object: {obj.name}, Faces: {len(obj.data.polygons)}")
 
 # Export the selected objects as ASCII STL
+# updated from https://blender.stackexchange.com/questions/322693/how-to-export-combinations-of-models-as-stl
 bpy.ops.wm.stl_export(
     filepath=output_stl_path,
     check_existing=False,
