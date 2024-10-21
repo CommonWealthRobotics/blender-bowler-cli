@@ -17,26 +17,22 @@ bpy.ops.wm.open_mainfile(filepath=input_blend_path)
 ensure_object_mode()
 
 # Select all mesh objects
-bpy.ops.object.select_all(action='DESELECT')
-for obj in bpy.context.scene.objects:
+for obj in bpy.context.scene.collection.all_objects:
     if obj.type == 'MESH':
         obj.select_set(True)
 
 # Count selected objects and their faces
-selected_objects = bpy.context.selected_objects
+selected_objects = [obj for obj in bpy.context.selected_objects if obj.type == 'MESH']
 print(f"Found {len(selected_objects)} mesh objects")
 for obj in selected_objects:
     print(f"Object: {obj.name}, Faces: {len(obj.data.polygons)}")
 
 # Export the selected objects as ASCII STL
-bpy.ops.export_mesh.stl(
+bpy.ops.wm.stl_export(
     filepath=output_stl_path,
     check_existing=False,
-    use_selection=True,
     global_scale=1.0,
-    use_scene_unit=True,
-    ascii=True,
-    use_mesh_modifiers=True
+    use_scene_unit=True
 )
 
 print(f"Blender file loaded from: {input_blend_path}")
@@ -46,13 +42,5 @@ print(f"ASCII STL exported to: {output_stl_path}")
 if os.path.exists(output_stl_path):
     file_size = os.path.getsize(output_stl_path)
     print(f"STL file size: {file_size} bytes")
-    
-    # Print the first few lines of the file to verify it's ASCII
-    with open(output_stl_path, 'r') as f:
-        print("First 5 lines of the STL file:")
-        for i, line in enumerate(f):
-            if i >= 5:
-                break
-            print(line.strip())
 else:
     print("Error: STL file was not created")
