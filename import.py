@@ -20,7 +20,7 @@ try:
         print("DELETE objects for new file")
 
     # Import the STL file
-    bpy.ops.import_mesh.stl(filepath=input_stl_path)
+    bpy.ops.wm.stl_import(filepath=input_stl_path)
 
     # Select the imported object and center it
     imported_obj = bpy.context.selected_objects[0]

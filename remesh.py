@@ -36,14 +36,11 @@ for obj in selected_objects:
     print(f"Object: {obj.name}, Faces: {len(obj.data.polygons)}")
 
 # Export the selected objects as ASCII STL
-bpy.ops.export_mesh.stl(
+bpy.ops.wm.stl_export(
     filepath=output_stl_path,
     check_existing=False,
-    use_selection=True,
     global_scale=1.0,
-    use_scene_unit=True,
-    ascii=True,
-    use_mesh_modifiers=True
+    use_scene_unit=True
 )
 
 print(f"Blender file loaded from: {input_blend_path}")
