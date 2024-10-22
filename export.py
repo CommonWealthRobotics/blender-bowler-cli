@@ -45,3 +45,5 @@ if os.path.exists(output_stl_path):
     print(f"STL file size: {file_size} bytes")
 else:
     print("Error: STL file was not created")
+    
+    
